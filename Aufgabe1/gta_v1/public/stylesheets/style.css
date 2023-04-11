@@ -35,9 +35,18 @@ html {
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  display: flex;
+  /*display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh;*/
+
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-areas:
+    "header  header"
+    "main main"
+    "footer  footer";
+  height: 100vh;
 }
 
 a {
@@ -50,7 +59,7 @@ a {
 
 
 /* Grid styles (no changes required) */
-
+/*
 .row {
   width: 100%;
   display: flex;
@@ -104,6 +113,176 @@ a {
 
 .col-12 {
   width: calc(100% - 1rem);
+}
+*/
+
+/* ### Grid declaration and some styling to those elements ### */
+
+/* Sytling for the header area */
+.header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #888;
+  padding: 20px;
+  /*margin-bottom: 40px;*/
+}
+
+  header img {
+    width: 53px;
+  }
+
+
+
+/* Sytling for the main area */
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template: "tag discover";
+  gap: 30px;
+  margin: 40px auto;
+} 
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  /* Sytling for the tagging area / fieldsets in general */
+
+  .tagging {
+    grid-area: tag;
+    /*background-color: #00B7FF;*/
+  }
+
+  fieldset {
+    padding: 10px;
+  }
+
+  fieldset > input {
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  fieldset > label {
+    margin-bottom: 20px;
+  }
+
+  .add_tag {
+    width: 100%;
+    padding: 5px;
+  }
+
+
+  /* Sytling for the discovery area */
+
+  .discovery {
+    grid-area: discover;
+    /*background-color: #666;*/
+  }
+
+
+  .discovery__search {
+    margin-bottom: 30px;
+  }
+
+  .search_input_container {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  .search_input_container input {
+    width: fit-content;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .search_input_container button {
+    padding: 5px 10px;
+  }
+
+  .discovery__wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+  }
+
+  .discovery__results {
+    list-style: none;
+  }
+
+  .discovery__results > li {
+    padding: 20px 10px;
+    background-color: #888;
+    color: #00B7FF;
+    margin-bottom: 20px;
+  }
+
+  .discovery__map {
+    display:flex;
+    flex-direction: column;
+  }
+
+/* Sytling for the footer area */
+
+.footer {
+  grid-area: footer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #888;
+  flex-shrink: 0;
+  padding: 20px;
+}
+
+
+@media screen and (max-width: 500px){
+  body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tagging {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #tag-form {
+    width: fit-content;
+  }
+
+  .discovery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .discovery__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  .discovery__taglist{
+    display: flex;
+    justify-content: center;
+  }
+
+  .discovery__results {
+    width: fit-content;
+  }
+
+  .discovery__map img {
+    width: calc(100vw - 2*10px);
+  }
 }
 
 
