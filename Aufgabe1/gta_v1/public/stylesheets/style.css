@@ -109,29 +109,167 @@ a {
 
 /* ### TODO ### Styles for Header Component */
 
-/* ... your code here ... */
+header{
+ display: grid;
+ grid-area: header;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ background-color: indianred;
+ padding: 10px;
+}  
+
+header img{
+  width: 40px;
+  margin-top: 10px;
+}
 
 
 /* ### TODO ### Styles for Main Component */
+main{
+  grid-area: main;
+  display: grid;
+  grid-column-start: 2;
+  grid-column-end: five;
+  grid-row-start: row1-start;
+  grid-row-end: 3;
+}
 
-/* ... your code here ... */
+h2{
+  margin-bottom: 10px;
+}
 
 
 /* ### TODO ### Styles for Tagging component */
 
-/* ... your code here ... */
+.tagging{
+  grid-area: tag;
+  grid-column-start: 1;
+  grid-column-end: span col4-start;
+  grid-row-start: 2;
+  grid-row-end: span 2;
+  max-width: 100px;
+  box-sizing: border-box;
+  margin-left: 30px;
+}
+fieldset {
+  padding: 20px;
+}
 
+fieldset > input {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+fieldset > label {
+  margin-bottom: 20px;
+}
+
+.add_tag {
+  width: 100%;
+  padding: 5px;
+}
 
 /* ### TODO ### Styles for Discovery component */
 
-/* ... your code here ... */
+.discovery{
+  grid-area: discover;
+  grid-column-start: 3;
+  grid-row-start: 2;
+}
 
+.search_input_container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.search_input_container input {
+  width: fit-content;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.search_input_container button {
+  padding: 5px 10px;
+}
+
+.discovery_wrapper{
+  display: grid;
+  grid-template-columns: 1;
+  gap: 20px;
+}
+.discovery__results > li {
+padding: 5px;
+background-color: bisque;
+color: coral;
+margin-bottom: 10px;
+}
+
+.discovery_map{
+  display: flex;
+  flex-direction: column;
+}
 
 /* ### TODO ### Styles for Footer Component */
 
-/* ... your code here ... */
+.footer{
+  grid-area: footer;
+  display: flex;
+  background-color: palevioletred;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 5px;
+}
 
 
 /* ### TODO ### Media Queries */
 
 /* ... your code here ... */
+
+@media screen and (max-width: 500px){
+  body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tagging {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #tag-form {
+    width: fit-content;
+  }
+
+  .discovery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .discovery__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  .discovery__taglist{
+    display: flex;
+    justify-content: center;
+  }
+
+  .discovery__results {
+    width: fit-content;
+  }
+
+  .discovery__map img {
+    width: calc(100vw - 2*10px);
+  }
+}
