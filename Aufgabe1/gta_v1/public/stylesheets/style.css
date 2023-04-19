@@ -176,6 +176,7 @@ fieldset > label {
   grid-area: discover;
   grid-column-start: 3;
   grid-row-start: 2;
+  box-sizing: border-box;
 }
 
 .search_input_container {
