@@ -1,0 +1,277 @@
+/*
+  File origin: VS1LAB A1b  
+
+  CSS style is BEM. Classes used for CSS, IDs for JavaScript querying (future use).
+  CSS variables used for clarity and themability (e.g. through SSR). 
+  Inherited box sizing used for ease of including 3rd party content-box components.
+*/
+
+/* Global styling */
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  /* This approach prevents issues with 3rd party content-box components */
+  box-sizing: inherit;
+}
+
+
+/* Variables (example: see declaration for "a" below) */
+
+:root {
+  --link-color: #00B7FF;
+  --background-color: #efefef;
+  --border-color: #cdcdcd;
+  --gray-color: #666;
+}
+
+
+/* HTML element styles */
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--link-color);
+}
+
+/* ### TODO ### Styles for other HTML elements */
+
+/* ... your code here ... */
+
+
+/* Grid styles (no changes required) */
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.col-1 {
+  width: calc(8.33% - 1rem);
+}
+
+.col-2 {
+  width: calc(16.66% - 1rem);
+}
+
+.col-3 {
+  width: calc(25% - 1rem);
+}
+
+.col-4 {
+  width: calc(33.33% - 1rem);
+}
+
+.col-5 {
+  width: calc(41.66% - 1rem);
+}
+
+.col-6 {
+  width: calc(50% - 1rem);
+}
+
+.col-7 {
+  width: calc(58.33% - 1rem);
+}
+
+.col-8 {
+  width: calc(66.66% - 1rem);
+}
+
+.col-9 {
+  width: calc(75% - 1rem);
+}
+
+.col-10 {
+  width: calc(83.33% - 1rem);
+}
+
+.col-11 {
+  width: calc(91.66% - 1rem);
+}
+
+.col-12 {
+  width: calc(100% - 1rem);
+}
+
+
+/* ### TODO ### Styles for Header Component */
+
+header{
+ display: grid;
+ grid-area: header;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ background-color: indianred;
+ padding: 10px;
+}  
+
+header img{
+  width: 40px;
+  margin-top: 10px;
+}
+
+
+/* ### TODO ### Styles for Main Component */
+main{
+  grid-area: main;
+  display: grid;
+  grid-column-start: 2;
+  grid-column-end: five;
+  grid-row-start: row1-start;
+  grid-row-end: 3;
+}
+
+h2{
+  margin-bottom: 10px;
+}
+
+
+/* ### TODO ### Styles for Tagging component */
+
+.tagging{
+  grid-area: tag;
+  grid-column-start: 1;
+  grid-column-end: span col4-start;
+  grid-row-start: 2;
+  grid-row-end: span 2;
+  max-width: 100px;
+  box-sizing: border-box;
+  margin-left: 30px;
+}
+fieldset {
+  padding: 20px;
+}
+
+fieldset > input {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+fieldset > label {
+  margin-bottom: 20px;
+}
+
+.add_tag {
+  width: 100%;
+  padding: 5px;
+}
+
+/* ### TODO ### Styles for Discovery component */
+
+.discovery{
+  grid-area: discover;
+  grid-column-start: 3;
+  grid-row-start: 2;
+  box-sizing: border-box;
+}
+
+.search_input_container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.search_input_container input {
+  width: fit-content;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.search_input_container button {
+  padding: 5px 10px;
+}
+
+.discovery_wrapper{
+  display: grid;
+  grid-template-columns: 1;
+  gap: 20px;
+}
+.discovery__results > li {
+padding: 5px;
+background-color: bisque;
+color: coral;
+margin-bottom: 10px;
+}
+
+.discovery_map{
+  display: flex;
+  flex-direction: column;
+}
+
+/* ### TODO ### Styles for Footer Component */
+
+.footer{
+  grid-area: footer;
+  display: block;
+  background-color: palevioletred;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 5px;
+  margin-top: auto;
+}
+
+
+/* ### TODO ### Media Queries */
+
+/* ... your code here ... */
+
+@media screen and (max-width: 500px){
+  body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tagging {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #tag-form {
+    width: fit-content;
+  }
+
+  .discovery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .discovery__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  .discovery__taglist{
+    display: flex;
+    justify-content: center;
+  }
+
+  .discovery__results {
+    width: fit-content;
+  }
+
+  .discovery__map img {
+    width: calc(100vw - 2*10px);
+  }
+}
