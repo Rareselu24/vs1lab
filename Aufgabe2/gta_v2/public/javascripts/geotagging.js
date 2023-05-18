@@ -67,7 +67,7 @@ class MapManager {
 
     /**
      * Create a new MapManager instance.
-     * @param {string} apiKey Your MapQuest API Key
+     *@param {string} apiKey  Your MapQuest API Key
      */
     constructor(apiKey) {
         this.#apiKey = apiKey;
@@ -102,7 +102,13 @@ class MapManager {
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
-// ... your code here ...
+function updateLocation(){
+    window.addEventListener('load',function(){
+        setCoordinate(findLocation.longitude , findLocation.latitude);
+        document.getElementById('latitude').value = findLocation.latitude;
+        document.getElementById('longitude').value = findLocation.longitude;
+    })
+}
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
