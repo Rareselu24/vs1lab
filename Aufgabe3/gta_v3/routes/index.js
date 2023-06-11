@@ -97,8 +97,7 @@ router.post('/discovery', (req, res) => {
 
   const current = new GeoTag( searchTerm, latitudeSearch, longitudeSearch)
   console.log(req.body)
-  let results = GeoTagStore.searchNearbyGeoTags(current)
-  console.log(results);
+  let results = GeoTagStore.searchNearbyGeoTags(current, searchTerm)
   res.render('index', { taglist: results , latitude : latitudeSearch, longitude: longitudeSearch})
 })
 

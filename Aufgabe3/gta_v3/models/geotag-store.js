@@ -38,19 +38,19 @@ class GeoTagStore {
     };
 
     static removeGeoTag = (name) => {
-      const index = geoTags.findIndex((tag) => tag.Name === name);
+      const index = geoTags.findIndex((tag) => tag.name === name);
       if (index !== -1) {
         this.#geoTags.splice(index, 1);
       }
     };
 
     static calculateDistance(geoTag,lastgeotag) {
-      if(lastgeotag.Longitude != geoTag.Longitude || lastgeotag.Latitude != geoTag.latitude){
+      if(lastgeotag.longitude != geoTag.longitude || lastgeotag.latitude != geoTag.latitude){
         const R = 6371e3; // metres
-        const φ1 = lastgeotag.Latitude * Math.PI/180; // φ, λ in radians
-        const φ2 = geoTag.Latitude * Math.PI/180;
-        const Δφ = (geoTag.Latitude - lastgeotag.Latitude) * Math.PI/180;
-        const Δλ = (geoTag.Longitude - lastgeotag.Longitude) * Math.PI/180;
+        const φ1 = lastgeotag.latitude * Math.PI/180; // φ, λ in radians
+        const φ2 = geoTag.latitude * Math.PI/180;
+        const Δφ = (geoTag.latitude - lastgeotag.latitude) * Math.PI/180;
+        const Δλ = (geoTag.longitude - lastgeotag.longitude) * Math.PI/180;
 
         const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + 
         Math.cos(φ1) * Math.cos(φ2) *
@@ -64,25 +64,15 @@ class GeoTagStore {
       return 0;
   }
 
-    static getNearbyGeoTags = (current, d = 100) => {
+    static getNearbyGeoTags = (current, d = 50) => {
       return this.#geoTags.filter((geoTag) => this.calculateDistance(geoTag, current) <= d); 
     };
 
-    static searchNearbyGeoTags = (current, hashtag, d = 50) => {
-      let results = this.getNearbyGeoTags(current);
-      results.forEach((tag) => console.log(tag.toString()));
-      results.filter((tag) => console.log(tag.Name.indexOf(hashtag) !== -1  || tag.Hashtag.indexOf(hashtag) !== -1))
-      return this.#geoTags.filter(
-        (tag) =>
-          this.calculateDistance(tag, current) <= d &&
-          (tag.Name.includes(hashtag) || tag.Hashtag.includes(hashtag))
+    static searchNearbyGeoTags = (current, searchTerm) => {
+      return this.getNearbyGeoTags(current).filter(
+        (tag) => (tag.name.includes(searchTerm) || tag.hashtag.includes(searchTerm))
       );
     };
-
-    
-
-    constructor(){
-     }
 }
 
 module.exports = GeoTagStore;

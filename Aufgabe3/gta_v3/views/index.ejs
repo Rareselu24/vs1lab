@@ -67,9 +67,9 @@
                     <legend>Search</legend>
                     <div class="search_field">
                         <label for="search_input">Search term or keywords:</label>
-                        <input type="search" id="search_input" name = "searchTerm" placeholder="e.g. Berlin">
-                        <input type="number" id="latitudeSearch" name="latitudeSearch" value="<%= locals.latitude %>" hidden>
-                        <input type="number" id="longitudeSearch" name="longitudeSearch" value="<%= locals.longitude %>" hidden>
+                        <input type="text" id="search_input" name = "searchTerm" placeholder="e.g. Berlin">
+                        <input type="text" id="latitudeSearch" name="latitudeSearch" value="<%= locals.latitude %>" hidden>
+                        <input type="text" id="longitudeSearch" name="longitudeSearch" value="<%= locals.longitude %>" hidden>
                         <button type="submit" id="submit_search">Search</button>
                     </div>
                 </fieldset>
@@ -81,13 +81,13 @@
                 <div class="discovery__taglist">
                     <ul class="discovery__results" id="discoveryResults">
                         <% if (taglist !== undefined) taglist.forEach(function(gtag) { %>
-                            <li><%= gtag.Name %> ( <%= gtag.Latitude %>,<%= gtag.Longitude %>) <%= gtag.Hashtag %> </li>
+                            <li><%= gtag.name %> ( <%= gtag.latitude %>, <%= gtag.longitude %> ) <%= gtag.hashtag %> </li>
                         <% }); %>
                     </ul>
                 </div>
 
                 <div class="discovery__map">
-                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
+                    <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" data-tags ="<%= JSON.stringify(taglist) %>"/>
                     <span>Result map</span>
                 </div>
             </div>

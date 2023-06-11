@@ -108,6 +108,8 @@ const updateLocation = function() {
     const mapManager = new MapManager('SV7xcWoVtfpcCZwGdHm7vAjxiGVzklqt');
     const currentLat =  document.getElementById('latitude');
     const currentLong = document.getElementById('longitude');
+    const tagsMap = document.getElementById('mapView').dataset.tags;
+    const taglist = JSON.parse(tagsMap);
 
     if( currentLat.value === '' || currentLong.value === '' ){
     LocationHelper.findLocation(helper => {
@@ -132,16 +134,20 @@ const updateLocation = function() {
         );
 
         //Set map
-        document.getElementById('mapView').src = mapManager.getMapUrl(latitude, longitude);
+        const mapUrl = mapManager.getMapUrl(latitude, longitude, taglist);
+        document.getElementById('mapView').src = mapUrl;
 
     });
 }
 
  else {
-    document.getElementById('mapView').src = mapManager.getMapUrl(currentLat.value, currentLong.value);
+        const mapUrl = mapManager.getMapUrl(currentLat.value, currentLong.value, taglist);
+        document.getElementById('mapView').src = mapUrl;
     
  }   
-    
+
+
+
 };
 
 // Wait for the page to fully load its DOM content, then call updateLocation

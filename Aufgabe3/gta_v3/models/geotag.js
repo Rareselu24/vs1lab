@@ -11,44 +11,44 @@
  */
 class GeoTag {
 
-    #Name;
-    #Latitude;
-    #Longitude;
-    #Hashtag;
+    #name;
+    #latitude;
+    #longitude;
+    #hashtag;
 
-    get Name(){
-        return this.#Name;
+    get name(){
+        return this.#name;
     }
 
-    get Latitude(){
-        return this.#Latitude;
+    get latitude(){
+        return this.#latitude;
     }
 
-    get Longitude(){
-        return this.#Longitude;
+    get longitude(){
+        return this.#longitude;
     }
 
-    get Hashtag(){
-        return this.#Hashtag;
+    get hashtag(){
+        return this.#hashtag;
     }
 
-    constructor (Name, Latitude, Longitude, Hashtag = '' ){
-        this.#Latitude = Latitude;
-        this.#Longitude = Longitude;
-        this.#Name = Name;
-        this.#Hashtag = Hashtag;
+    constructor (name, latitude, longitude, hashtag = '' ){
+        this.#latitude = latitude;
+        this.#longitude = longitude;
+        this.#name = name;
+        this.#hashtag = hashtag;
     }
     
     toJSON() {
         return {
-            Name: this.#Name,
-            Latitude: this.#Latitude,
-            Longitude: this.#Longitude,
-            Hashtag: this.#Hashtag
+            name: this.#name,
+            latitude: this.#latitude,
+            longitude: this.#longitude,
+            hashtag: this.#hashtag
         }
     }
     toString(){
-        return `Name: ${this.Name}, Latitude: ${this.Latitude}, Longitude: ${this.#Longitude}, Hashtag: ${this.Hashtag}`
+        return `Name: ${this.name}, Latitude: ${this.latitude}, Longitude: ${this.#longitude}, Hashtag: ${this.hashtag}`
     }
 }
 
