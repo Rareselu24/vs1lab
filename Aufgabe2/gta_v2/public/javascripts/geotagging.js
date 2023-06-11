@@ -67,7 +67,7 @@ class MapManager {
 
     /**
      * Create a new MapManager instance.
-     *@param {string} apiKey  Your MapQuest API Key
+     * @param {string} apiKey Your MapQuest API Key
      */
     constructor(apiKey) {
         this.#apiKey = apiKey;
@@ -102,15 +102,42 @@ class MapManager {
  * A function to retrieve the current location and update the page.
  * It is called once the page has been fully loaded.
  */
-function updateLocation(){
-    window.addEventListener('load',function(){
-        setCoordinate(findLocation.longitude , findLocation.latitude);
-        document.getElementById('latitude').value = findLocation.latitude;
-        document.getElementById('longitude').value = findLocation.longitude;
-    })
-}
+// ... your code here ...
+
+const updateLocation = function() {
+    LocationHelper.findLocation(helper => {
+        const mapManager = new MapManager('SV7xcWoVtfpcCZwGdHm7vAjxiGVzklqt');
+        const {latitude, longitude} = helper;
+
+        //Output coords for troubleshooting
+        console.log(`lat: ${latitude}, long: ${longitude}`);
+
+        //Set inputs
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+        document.getElementById('latitudeSearch').value = latitude;
+        document.getElementById('longitudeSearch').value = longitude;
+        
+        //Feedback if everything worked for hidden inputs
+        console.log(
+            `latSearch: ${
+                document.getElementById('latitudeSearch').value
+            }, longSearch: ${
+                document.getElementById('longitudeSearch').value
+            }`
+        );
+
+        //Set map
+        document.getElementById('mapView').src = mapManager.getMapUrl(latitude, longitude);
+
+    });
+
+    
+    
+};
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => {
-    alert("Please change the script 'geotagging.js'");
+    updateLocation();
+    //alert("Please change the script 'geotagging.js'");
 });

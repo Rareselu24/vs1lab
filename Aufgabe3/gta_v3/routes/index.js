@@ -61,6 +61,19 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/tagging', (req, res) => {
+  let {tagName, latitude, longitude, hashtag} = req.body;
+
+  latitude = parseFloat(latitude)
+  longitude = parseFloat(longitude)
+  const current = new GeoTag(tagName, latitude, longitude, hashtag)
+  GeoTagStore.addGeoTag(current)
+
+  let taglist = GeoTagStore.getNearbyGeoTags(current)
+  console.log(taglist)
+  taglist.forEach( tag => console.log(tag.toString()));
+  res.render('index', { taglist : taglist, latitude, longitude})
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -69,7 +82,7 @@ router.get('/', (req, res) => {
  * Requests cary the fields of the discovery form in the body.
  * This includes coordinates and an optional search term.
  * (http://expressjs.com/de/4x/api.html#req.body)
- *
+ *  
  * As response, the ejs-template is rendered with geotag objects.
  * All result objects are located in the proximity of the given coordinates.
  * If a search term is given, the results are further filtered to contain 
@@ -79,5 +92,14 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/discovery', (req, res) => {
+  let { searchTerm, latitudeSearch, longitudeSearch} = req.body;
+
+  const current = new GeoTag( searchTerm, latitudeSearch, longitudeSearch)
+  console.log(req.body)
+  let results = GeoTagStore.searchNearbyGeoTags(current)
+  console.log(results);
+  res.render('index', { taglist: results , latitude : latitudeSearch, longitude: longitudeSearch})
+})
 
 module.exports = router;

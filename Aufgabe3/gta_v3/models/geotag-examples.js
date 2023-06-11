@@ -4,7 +4,7 @@
  * This script is a template for exercise VS1lab/Aufgabe3
  * Complete all TODOs in the code documentation.
  */
-
+const GeoTag = require("./geotag");
 /**
  * A class representing example geoTags at HKA
  * 
@@ -29,6 +29,15 @@ class GeoTagExamples {
             ['Building B', 49.016843, 8.391372, '#campus'],
             ['Building K', 49.013190, 8.392090, '#campus'],
         ];
+    }
+
+    static ConvertToGeoTag() {
+        let taguri = [];
+        this.tagList.forEach(tag => {
+            taguri.push(new GeoTag(tag[0], tag[1], tag[2], tag[3]))
+        });
+
+        return taguri;
     }
 }
 
