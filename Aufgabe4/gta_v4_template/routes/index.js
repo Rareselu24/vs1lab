@@ -26,6 +26,12 @@ const GeoTag = require('../models/geotag');
  */
 // eslint-disable-next-line no-unused-vars
 const GeoTagStore = require('../models/geotag-store');
+let bazadate = new GeoTagStore();
+const datePrimite = require('../models/geotag-examples');
+datePrimite.tagList.forEach(geoTag => 
+  {
+    bazadate.addGeoTag(new GeoTag(geoTag[0],geoTag[1],geoTag[2],geoTag[3]))
+  });
 
 // App routes (A3)
 
@@ -39,8 +45,28 @@ const GeoTagStore = require('../models/geotag-store');
  */
 
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  res.render('index', { taglist:bazadate.Toate() })
 });
+
+router.post('/tagging', (req, res) => {
+  bazadate.addGeoTag(new GeoTag(req.body.latitude, req.body.longitude, req.body.name, req.body.hashtag));
+  res.render('index', {
+    taglist: bazadate.Toate(), 
+    query: req.body.query,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude
+  })
+});
+
+
+router.post('/discovery', (req, res) => {
+  let { searchTerm, latitudeSearch, longitudeSearch} = req.body;
+
+  const current = new GeoTag( searchTerm, latitudeSearch, longitudeSearch)
+  console.log(req.body)
+  let results = GeoTagStore.searchNearbyGeoTags(current, searchTerm)
+  res.render('index', { taglist: results , latitude : latitudeSearch, longitude: longitudeSearch})
+})
 
 // API routes (A4)
 
@@ -57,7 +83,21 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.get('/api/geotags', (req, res) => {
+  let taglist = [];
+  const latitude = parseFloat(req.query.latitude);
+  const longitude = parseFloat(req.query.longitude);
+  const searchTerm = req.query.searchTerm;
 
+  if(latitude != null && longitude != null)
+    if(searchTerm){
+      taglist = bazadate.searchNearbyGeoTags (searchTerm, latitude, longitude);
+    }
+    else{taglist = bazadate.getNearbyGeoTags(latitude,longitude);}
+    else{taglist = bazadate.Toate();}
+
+    res.json(taglist);
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
@@ -71,7 +111,19 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/api/geotags', (req, res) => {
 
+    const name = req.body.name;
+    const latitude = parseFloat(req.body.latitude);
+    const longitude = parseFloat(req.body.longitude);
+    const hashtag = req.body.hashtag;
+
+//--- neuer Tag mit entsprechender id ---//
+    let id = bazadate.addGeoTag(new GeoTag(name, latitude, longitude, hashtag));
+//--- URL des neuen Tags soll im Location HTTP-Header mit AJAX zurückgesandt werden ---//
+    res.set('Location', `/api/geotags/${id}`);
+    res.sendStatus(201);
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'GET' requests.
@@ -84,6 +136,12 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.get('/api/geotags/:id', (req, res) => {
+  const id = req.params.id;
+//--- finde den GeoTag mit dieser id und übergebe sie an geotag ---//
+  let geoTag = bazadate.IdToTag(id);
+  res.json(geoTag);
+})
 
 
 /**
@@ -101,6 +159,17 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.put('/api/geotags/:id', (req, res) => {
+  const id = req.params.id;
+  const latitude = parseFloat(req.body.latitude);
+  const longitude = parseFloat(req.body.longitude);
+  const name = req.body.name;
+  const hashtag = req.body.hashtag;
+
+  let geoTag = bazadate.Inlocuit(id, new GeoTag(latitude, longitude, name, hashtag));
+
+  res.json(geoTag);
+});
 
 
 /**
@@ -115,5 +184,12 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.delete('/api/geotags/:id', (req, res) => {
+  const id = req.params.id;
+  let geoTag = bazadate.IdToTag(id);
+  bazadate.removeGeoTag(geoTag.name);
+
+  res.json(geoTag);
+});
 
 module.exports = router;
